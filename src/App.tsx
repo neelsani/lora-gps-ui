@@ -12,6 +12,7 @@ import Map, {
 import { Button } from "./components/ui/button";
 
 type locDat = {
+  id: string;
   gpsFix: number;
   lat: number;
   lon: number;
@@ -61,20 +62,9 @@ const App = () => {
 
   function parseGPSData(data: string) {
     // Regex to match the data format: fix:<value> lat:<value> lon:<value> alt:<value> sat:<value>
-    const regex =
-      /fix:(\d+)\s*lat:([+-]?\d+(\.\d+)?)\s*lon:([+-]?\d+(\.\d+)?)\s*alt:([+-]?\d+(\.\d+)?)\s*sat:(\d+)/;
-    const match = data.match(regex);
-    console.log(data);
-    if (match) {
-      const parsedData = {
-        gpsFix: parseFloat(match[1]),
-        lat: parseFloat(match[2]),
-        lon: parseFloat(match[4]),
-        alt: parseFloat(match[6]),
-        numSV: parseInt(match[8]),
-      };
-      setGpsData(parsedData);
-    }
+
+    setGpsData(JSON.parse(data));
+    console.log(JSON.parse(data));
   }
 
   const layerProp: FillExtrusionLayer = {
@@ -147,10 +137,18 @@ const App = () => {
           latitude={gpsData ? gpsData.lat : 40}
           anchor="bottom"
         >
-          <img
-            width={30}
-            src="https://media2.giphy.com/media/9dWLC0RTypEOTHRRcJ/source.gif"
-          />
+          <div className=" relative w-[30px] h-[30px]">
+            {gpsData ? (
+              <img
+                className=" absolute w-full h-full top-[25px] "
+                src="https://cdn.pixabay.com/animation/2023/10/11/21/20/21-20-17-15_512.gif"
+              />
+            ) : null}
+            <img
+              className=" absolute "
+              src="https://static-00.iconduck.com/assets.00/location-pin-icon-1536x2048-3kypjyl6.png"
+            />
+          </div>
         </Marker>
         <div className=" absolute flex flex-col gap-3 top-5 right-5">
           <Button onClick={connectToSerial}>Connect</Button>
