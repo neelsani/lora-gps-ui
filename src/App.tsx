@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Map, {
   FillExtrusionLayer,
@@ -33,6 +32,7 @@ const App = () => {
 
       const readData = async () => {
         try {
+          // eslint-disable-next-line no-constant-condition
           while (true) {
             const { value, done } = await reader.read();
             if (done) {
@@ -67,7 +67,7 @@ const App = () => {
     console.log(data);
     if (match) {
       const parsedData = {
-        gpsFix: match[1],
+        gpsFix: parseFloat(match[1]),
         lat: parseFloat(match[2]),
         lon: parseFloat(match[4]),
         alt: parseFloat(match[6]),
@@ -112,7 +112,7 @@ const App = () => {
     // Optionally, initiate connection on mount
     // connectToSerial();
   }, []);
-  const mapRef = useRef<MapRef>();
+  const mapRef = useRef<MapRef>(null);
   const onLocate = useCallback(() => {
     gpsData &&
       mapRef.current?.flyTo({
