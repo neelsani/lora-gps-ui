@@ -125,7 +125,7 @@ const App = () => {
           zoom: 3.5,
         }}
         style={{ width: "100%", height: "100%" }}
-        mapStyle="mapbox://styles/mapbox/dark-v11"
+        mapStyle="mapbox://styles/mapbox/streets-v12"
         mapboxAccessToken={process.env.VITE_MAPBOX_TOKEN}
       >
         <GeolocateControl position="top-left" />
