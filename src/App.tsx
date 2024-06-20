@@ -62,9 +62,12 @@ const App = () => {
 
   function parseGPSData(data: string) {
     // Regex to match the data format: fix:<value> lat:<value> lon:<value> alt:<value> sat:<value>
-
-    setGpsData(JSON.parse(data));
-    console.log(JSON.parse(data));
+    try {
+      setGpsData(JSON.parse(data));
+      console.log(JSON.parse(data));
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   const layerProp: FillExtrusionLayer = {
